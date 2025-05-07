@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Meu Plano</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 1rem;
+      background: #f5f5f5;
+    }
+    .content-section {
+      display: none;
+    }
+    ul {
+      list-style: none;
+      padding: 0;
+    }
+    li, button {
+      background: #00875f;
+      color: white;
+      margin: 0.5rem 0;
+      padding: 1rem;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      cursor: pointer;
+      width: 80%;
+      max-width: 300px;
+    }
+    button {
+      width: 100%;
+    }
+    @media (max-width: 600px) {
+      body {
+        padding: 0.5rem;
+      }
+      button, li {
+        font-size: 0.9rem;
+        padding: 0.8rem;
+      }
+    }
+    h2, h3, h4 {
+      color: #00875f;
+    }
+  </style>
+</head>
+<body>
+  <!-- Login -->
+  <div id="login" class="content-section" style="display:block">
+    <h2>Login</h2>
+    <input type="text" id="usuario" placeholder="Usuário"><br><br>
+    <input type="password" id="senha" placeholder="Senha"><br><br>
+    <button onclick="fazerLogin()">Entrar</button>
+  </div>
+
+  <!-- Menu Principal -->
+  <div id="menu-principal" class="content-section">
+    <h2>Escolha uma opção</h2>
+    <button onclick="mostrarSecao('dieta-content')">Dieta</button>
+    <button onclick="mostrarSecao('treino-content')">Treino</button>
+  </div>
+
+  <!-- Seção Dieta -->
+  <div id="dieta-content" class="content-section">
+    <h3>Escolha o plano semanal</h3>
+    <ul>
+      <li onclick="mostrarSemana('1')">Semana 1</li>
+      <li onclick="mostrarSemana('2')">Semana 2</li>
+      <li onclick="mostrarSemana('3')">Semana 3</li>
+      <li onclick="mostrarSemana('4')">Semana 4</li>
+    </ul>
+    <button onclick="voltarPara('menu-principal')">Voltar</button>
+  </div>
+
+  <!-- Dias da semana -->
+  <div id="semana-dias" class="content-section">
+    <h3>Dias da Semana</h3>
+    <ul>
+      <li onclick="mostrarRefeicoes('segunda')">Segunda</li>
+      <li onclick="mostrarRefeicoes('terca')">Terça</li>
+      <li onclick="mostrarRefeicoes('quarta')">Quarta</li>
+      <li onclick="mostrarRefeicoes('quinta')">Quinta</li>
+      <li onclick="mostrarRefeicoes('sexta')">Sexta</li>
+      <li onclick="mostrarRefeicoes('sabado')">Sábado</li>
+      <li onclick="mostrarRefeicoes('domingo')">Domingo</li>
+    </ul>
+    <button onclick="voltarPara('dieta-content')">Voltar</button>
+  </div>
+
+  <!-- Refeições -->
+  <div id="refeicoes" class="content-section">
+    <h3>Refeições do Dia</h3>
+    <ul>
+      <li onclick="mostrarDetalhes('acordar')">Ao acordar</li>
+      <li onclick="mostrarDetalhes('cafe')">Café da manhã</li>
+      <li onclick="mostrarDetalhes('lanche1')">Lanche da manhã</li>
+      <li onclick="mostrarDetalhes('almoco')">Almoço</li>
+      <li onclick="mostrarDetalhes('lanche2')">Lanche da tarde</li>
+      <li onclick="mostrarDetalhes('jantar')">Jantar</li>
+      <li onclick="mostrarDetalhes('ceia')">Ceia</li>
+    </ul>
+    <button onclick="voltarPara('semana-dias')">Voltar</button>
+  </div>
+
+  <!-- Detalhes da Refeição -->
+  <div id="detalhes-refeicao" class="content-section">
+    <h4 id="titulo-refeicao">Refeição</h4>
+    <p id="texto-refeicao">Conteúdo da refeição será exibido aqui.</p>
+    <button onclick="voltarPara('refeicoes')">Voltar</button>
+  </div>
+
+  <!-- Seção Treino -->
+  <div id="treino-content" class="content-section">
+    <h3>Treinos da Semana</h3>
+    <ul>
+      <li onclick="mostrarTreino('A')">Treino A - Costas + Ombros</li>
+      <li onclick="mostrarTreino('B')">Treino B - Pernas</li>
+      <li onclick="mostrarTreino('C')">Treino C - Peito + Abdômen</li>
+      <li onclick="mostrarTreino('D')">Treino D - Bíceps + Tríceps</li>
+      <li onclick="mostrarTreino('E')">Treino E - Cardio + Core</li>
+      <li onclick="mostrarTreino('F')">Treino F - Descanso ou Atividade Leve</li>
+    </ul>
+    <div id="detalhes-treino" style="display: none; margin-top: 1rem;">
+      <h4 id="treino-titulo">Detalhes do Treino</h4>
+      <p id="treino-detalhes"></p>
+      <button onclick="voltarPara('treino-content')">Fechar Detalhes</button>
+    </div>
+    <button onclick="voltarPara('menu-principal')">Voltar</button>
+  </div>
+
+  <script>
+    function fazerLogin() {
+      const usuario = document.getElementById('usuario').value;
+      const senha = document.getElementById('senha').value;
+      if (usuario && senha) {
+        esconderTodas();
+        document.getElementById('menu-principal').style.display = 'block';
+      }
+    }
+
+    function esconderTodas() {
+      document.querySelectorAll('.content-section').forEach(div => div.style.display = 'none');
+    }
+
+    function mostrarSecao(id) {
+      esconderTodas();
+      document.getElementById(id).style.display = 'block';
+    }
+
+    function voltarPara(secao) {
+      esconderTodas();
+      document.getElementById(secao).style.display = 'block';
+    }
+
+    function mostrarSemana(numero) {
+      esconderTodas();
+      document.getElementById('semana-dias').style.display = 'block';
+    }
+
+    function mostrarRefeicoes(dia) {
+      esconderTodas();
+      document.getElementById('refeicoes').style.display = 'block';
+    }
+
+    function mostrarDetalhes(refeicao) {
+      esconderTodas();
+      document.getElementById('detalhes-refeicao').style.display = 'block';
+      const detalhes = {
+        acordar: "💊 Clembuterol\n💧 300 ml de água",
+        cafe: "🍳 Café da manhã: 1 banana prata, 1 fatia de pão integral, 1 colher de sopa de pasta de amendoim, 10g de aveia, 5g de chia, 150 ml de leite.",
+        lanche1: "🥪 Lanche da manhã: Sanduíche natural com 1 fatia de pão integral, 1 fatia de queijo muçarela, 2 fatias de peito de peru.",
+        almoco: "🥗 Almoço (Semana 1): Carne desfiada, purê de jerimum, arroz com cenoura.",
+        lanche2: "🍶 Lanche da tarde: Iogurte grego, 15g de aveia, 5g de chia.",
+        jantar: "🍽️ Jantar (Semana 1): Escondidinho de batata com frango.",
+        ceia: "🌙 Ceia: 2 ovos mexidos, 1 fatia de pão integral, opcional: chá sem açúcar."
+      };
+      document.getElementById('titulo-refeicao').textContent = `Refeição: ${refeicao}`;
+      document.getElementById('texto-refeicao').textContent = detalhes[refeicao] || "Conteúdo não encontrado.";
+    }
+
+    function mostrarTreino(treino) {
+      const treinos = {
+        A: `Treino A - Costas + Ombros (ênfase em largura e estética em V)\n
+          • Puxada aberta na frente – 4x12\n
+          • Remada baixa com triângulo – 4x10\n
+          • Pullover na polia – 3x15\n
+          • Elevação lateral com halteres – 4x15\n
+          • Desenvolvimento Arnold sentado – 3x12\n
+          • Face pull – 3x15\n
+          • Prancha frontal com toque de ombro – 3x 30s`,
+        B: `Treino B - Pernas (isolado e seguro para joelhos/lombar)\n
+          • Cadeira extensora – 4x15\n
+          • Stiff com halteres – 4x12\n
+          • Flexora deitada – 4x15\n
+          • Avanço com halteres – 3x12 por perna\n
+          • Elevação pélvica – 4x15\n
+          • Panturrilha em pé – 4x20`,
+        C: `Treino C - Peito + Abdômen (ênfase no peitoral superior)\n
+          • Supino inclinado halteres – 4x10\n
+          • Crucifixo inclinado – 3x12\n
+          • Crossover alto – 3x15\n
+          • Flexão declinada – 3x até a falha\n
+          • Abdômen com carga na polia – 4x15`,
+        D: `Treino D - Bíceps + Tríceps + Core\n
+          • Rosca direta barra – 4x12\n
+          • Rosca alternada – 3x12\n
+          • Tríceps testa – 4x12\n
+          • Tríceps corda – 3x15`,
+        E: `Treino E - Cardio + Core\n
+          • HIIT 20–25 min (bike ou escada)\n
+          • Circuito core: 3 rounds`,
+        F: `Treino F - Descanso ou Atividade leve`
+      };
+      document.getElementById('treino-detalhes').textContent = treinos[treino];
+      document.getElementById('detalhes-treino').style.display = 'block';
+    }
+  </script>
+</body>
+</html>
